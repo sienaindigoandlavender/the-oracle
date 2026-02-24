@@ -1,15 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import Navigation from "@/components/Navigation";
+import { Starfield } from "@/components/ui";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "The Oracle — Peer Beyond the Veil",
-  description: "Tarot readings, Numerology, Birth Chart, and Ouija board. Vintage occult divination tools.",
+  title: "Inner Oracle — Go Within, Transform, Become",
+  description: "Shadow journal, Tarot, Numerology, Birth Chart, Ouija & esoteric learning. Tools for inner transformation.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "The Oracle",
+    title: "Inner Oracle",
   },
 };
 
@@ -18,7 +19,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#0d0a08",
+  themeColor: "#070b14",
   viewportFit: "cover",
 };
 
@@ -29,15 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
-      <body
-        className="antialiased"
-        style={{
-          background: "radial-gradient(ellipse at 50% 0%, rgba(42,33,24,0.4) 0%, var(--ink) 70%)",
-          minHeight: "100dvh",
-        }}
-      >
+      <body className="antialiased nebula-bg">
+        <Starfield />
         <Navigation />
-        <main className="pb-20 sm:pb-6">{children}</main>
+        <main className="relative z-10">{children}</main>
       </body>
     </html>
   );

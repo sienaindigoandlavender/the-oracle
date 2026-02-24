@@ -2,50 +2,25 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { PageWrapper, PageHeader, OrnamentalDivider } from "@/components/ui";
+import { PageWrapper, PageHeader, CosmicDivider } from "@/components/ui";
 import { calcLifePath, calcExpression, calcSoulUrge, calcPersonality, numberMeanings } from "@/lib/numerology";
 
-interface Results {
-  lifePath: number;
-  expression: number;
-  soulUrge: number;
-  personality: number;
-}
+interface Results { lifePath: number; expression: number; soulUrge: number; personality: number; }
 
 function NumberCard({ label, number, delay = 0 }: { label: string; number: number; delay?: number }) {
   const info = numberMeanings[number] || { title: "Mystery", desc: "The cosmos holds secrets yet unrevealed." };
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
-      className="oracle-card p-5 sm:p-6"
-    >
-      <div
-        className="text-[10px] tracking-[3px] uppercase mb-2"
-        style={{ fontFamily: "'Cinzel', serif", color: "var(--gold-dim)" }}
-      >
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }} className="glass p-5">
+      <div className="text-[10px] tracking-[2px] uppercase mb-2" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-muted)" }}>
         {label}
       </div>
-      <div
-        className="text-4xl sm:text-5xl mb-2"
-        style={{
-          fontFamily: "'Cinzel Decorative', serif",
-          color: "var(--gold)",
-          textShadow: "0 0 30px rgba(201,168,76,0.3)",
-        }}
-      >
+      <div className="text-4xl mb-1" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-accent)", textShadow: "0 0 20px rgba(212,165,74,0.2)" }}>
         {number}
       </div>
-      <div
-        className="text-sm sm:text-base tracking-[2px] mb-2"
-        style={{ fontFamily: "'Cinzel', serif", color: "var(--gold)" }}
-      >
+      <div className="text-sm tracking-wide mb-2" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-primary)" }}>
         {info.title}
       </div>
-      <p className="text-sm leading-relaxed italic" style={{ color: "var(--bone-dim)" }}>
-        {info.desc}
-      </p>
+      <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{info.desc}</p>
     </motion.div>
   );
 }
@@ -65,46 +40,25 @@ export default function NumerologyPage() {
     });
   };
 
-  const isReady = name.trim().length > 0 && birthdate.length > 0;
-
   return (
     <PageWrapper>
-      <PageHeader icon="Ⅸ" title="Numerology" subtitle="The Sacred Mathematics of Being" />
-      <OrnamentalDivider />
+      <PageHeader icon="◈" title="Numerology" subtitle="Every name carries a vibration. Every number, a truth." />
+      <CosmicDivider />
 
       <div className="max-w-sm mx-auto mb-8">
         <label className="label-text">Full Birth Name</label>
-        <input
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder="As it appears on your birth certificate"
-          className="oracle-input mb-4"
-        />
-
+        <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="As it appears on your birth certificate" className="oracle-input mb-4" />
         <label className="label-text">Date of Birth</label>
-        <input
-          type="date"
-          value={birthdate}
-          onChange={e => setBirthdate(e.target.value)}
-          className="oracle-input mb-5"
-        />
-
-        <button
-          onClick={calculate}
-          disabled={!isReady}
-          className="oracle-btn w-full"
-        >
-          Reveal My Numbers
-        </button>
+        <input type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} className="oracle-input mb-5" />
+        <button onClick={calculate} disabled={!name.trim() || !birthdate} className="oracle-btn w-full">Reveal My Numbers</button>
       </div>
 
       {results && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          <NumberCard label="Life Path Number" number={results.lifePath} delay={0} />
-          <NumberCard label="Expression Number" number={results.expression} delay={0.1} />
-          <NumberCard label="Soul Urge Number" number={results.soulUrge} delay={0.2} />
-          <NumberCard label="Personality Number" number={results.personality} delay={0.3} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <NumberCard label="Life Path" number={results.lifePath} delay={0} />
+          <NumberCard label="Expression" number={results.expression} delay={0.1} />
+          <NumberCard label="Soul Urge" number={results.soulUrge} delay={0.2} />
+          <NumberCard label="Personality" number={results.personality} delay={0.3} />
         </div>
       )}
     </PageWrapper>

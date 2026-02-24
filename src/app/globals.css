@@ -1,100 +1,189 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=MedievalSharp&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Philosopher:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;500;600&family=MedievalSharp&display=swap');
 
 @import "tailwindcss";
 
 :root {
-  --parchment: #1a1410;
-  --parchment-light: #2a2118;
-  --gold: #c9a84c;
-  --gold-bright: #e8c84c;
-  --gold-dim: #8a6f2e;
-  --crimson: #8b2500;
-  --crimson-light: #a63222;
-  --bone: #d4c5a9;
-  --bone-dim: #9a8e78;
-  --ink: #0d0a08;
-  --spirit: #4a6741;
-  --mystic: #3d2b5a;
+  /* Midnight / Deep Space */
+  --void: #070b14;
+  --deep: #0c1225;
+  --midnight: #111a36;
+  --twilight: #1a2748;
+  --dusk: #243560;
+
+  /* Celestial accents */
+  --star: #e8dcc8;
+  --star-bright: #fff5e6;
+  --moon: #c4b59a;
+  --nebula-pink: #7b4a6e;
+  --nebula-purple: #4a3570;
+  --nebula-blue: #2a4a7a;
+  --aurora: #4a8a7a;
+
+  /* Readability — warm cream on deep blue */
+  --text-primary: #e8dcc8;
+  --text-secondary: #b8a88e;
+  --text-muted: #8a7d6a;
+  --text-accent: #d4a54a;
+
+  /* Interactive */
+  --glow: rgba(212,165,74,0.3);
+  --glow-strong: rgba(212,165,74,0.5);
+  --border-subtle: rgba(196,181,154,0.1);
+  --border-hover: rgba(196,181,154,0.25);
 }
 
 * { -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--ink);
-  color: var(--bone);
-  font-family: 'Cormorant Garamond', serif;
+  background: var(--void);
+  color: var(--text-primary);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
   overflow-x: hidden;
   min-height: 100dvh;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* HIGH READABILITY: slightly warm cream text on deep blue, never pure white */
+p, li, span, div {
+  text-rendering: optimizeLegibility;
 }
 
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--ink); }
-::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 2px; }
 
 input[type="date"], input[type="time"] { color-scheme: dark; }
-input::placeholder { color: var(--bone-dim); opacity: 0.5; }
+input::placeholder { color: var(--text-muted); opacity: 0.7; }
+textarea::placeholder { color: var(--text-muted); opacity: 0.7; }
+
+/* ─── ANIMATIONS ─────────────────────────────────── */
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }
 
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 15px rgba(201,168,76,0.3); }
-  50% { box-shadow: 0 0 30px rgba(201,168,76,0.6), 0 0 60px rgba(201,168,76,0.2); }
+  0%, 100% { box-shadow: 0 0 12px rgba(212,165,74,0.2); }
+  50% { box-shadow: 0 0 24px rgba(212,165,74,0.4), 0 0 48px rgba(212,165,74,0.1); }
 }
 
-@keyframes pentagramSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes nebulaShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes planchetteDrift {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(2px, -2px) rotate(0.5deg); }
-  75% { transform: translate(1px, -1px) rotate(0.2deg); }
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, 1px); }
 }
 
 @keyframes spiritGlow {
-  0%, 100% { text-shadow: 0 0 10px rgba(201,168,76,0.5); }
-  50% { text-shadow: 0 0 25px rgba(201,168,76,0.9), 0 0 50px rgba(201,168,76,0.4); }
+  0%, 100% { text-shadow: 0 0 8px rgba(212,165,74,0.4); }
+  50% { text-shadow: 0 0 20px rgba(212,165,74,0.8), 0 0 40px rgba(212,165,74,0.3); }
 }
 
-/* Component classes */
+@keyframes moonPhase {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ─── NEBULA BACKGROUND ──────────────────────────── */
+
+.nebula-bg {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(123,74,110,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(42,74,122,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(74,53,112,0.1) 0%, transparent 60%),
+    var(--void);
+}
+
+/* Star field */
+.starfield {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* ─── COMPONENT CLASSES ──────────────────────────── */
+
 .oracle-input {
   width: 100%;
   outline: none;
-  transition: border-color 0.3s ease;
-  background: rgba(26,20,16,0.8);
-  border: 1px solid rgba(201,168,76,0.2);
-  color: var(--bone);
-  font-family: 'Cormorant Garamond', serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(12,18,37,0.8);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: 'Raleway', sans-serif;
   font-size: 16px;
+  font-weight: 400;
   padding: 14px 18px;
-  border-radius: 2px;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
 }
 .oracle-input:focus {
-  border-color: var(--gold);
+  border-color: var(--text-accent);
+  box-shadow: 0 0 16px rgba(212,165,74,0.1);
+}
+
+.oracle-textarea {
+  width: 100%;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(12,18,37,0.8);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 16px 18px;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.8;
+}
+.oracle-textarea:focus {
+  border-color: var(--text-accent);
+  box-shadow: 0 0 16px rgba(212,165,74,0.1);
 }
 
 .oracle-btn {
-  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-  border: none;
-  color: var(--ink);
+  background: linear-gradient(135deg, rgba(212,165,74,0.2), rgba(212,165,74,0.35));
+  border: 1px solid rgba(212,165,74,0.3);
+  color: var(--star-bright);
   padding: 14px 32px;
-  border-radius: 2px;
+  border-radius: 8px;
   cursor: pointer;
-  font-family: 'Cinzel', serif;
-  font-size: 13px;
-  letter-spacing: 3px;
+  font-family: 'Philosopher', serif;
+  font-size: 14px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(201,168,76,0.2);
+  backdrop-filter: blur(8px);
+}
+.oracle-btn:hover {
+  background: linear-gradient(135deg, rgba(212,165,74,0.3), rgba(212,165,74,0.5));
+  box-shadow: 0 0 20px rgba(212,165,74,0.15);
 }
 .oracle-btn:disabled {
-  background: rgba(201,168,76,0.1);
-  color: var(--bone-dim);
+  background: rgba(196,181,154,0.05);
+  border-color: rgba(196,181,154,0.08);
+  color: var(--text-muted);
   box-shadow: none;
   cursor: default;
 }
@@ -103,18 +192,43 @@ input::placeholder { color: var(--bone-dim); opacity: 0.5; }
 }
 
 .oracle-card {
-  background: linear-gradient(145deg, rgba(26,20,16,0.9), rgba(42,33,24,0.6));
-  border: 1px solid rgba(201,168,76,0.15);
-  border-radius: 2px;
+  background: linear-gradient(145deg, rgba(12,18,37,0.8), rgba(26,39,72,0.4));
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
   transition: all 0.4s ease;
+  backdrop-filter: blur(8px);
+}
+.oracle-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 0 24px rgba(212,165,74,0.08);
 }
 
 .label-text {
   display: block;
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  color: var(--gold-dim);
-  letter-spacing: 2px;
+  font-family: 'Philosopher', serif;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+/* Glass panel */
+.glass {
+  background: rgba(12,18,37,0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+}
+
+/* Section heading */
+.section-head {
+  font-family: 'Philosopher', serif;
+  color: var(--text-accent);
+  letter-spacing: 3px;
+}
+
+/* Moon symbol */
+.moon-icon {
+  filter: drop-shadow(0 0 12px rgba(196,181,154,0.3));
 }
