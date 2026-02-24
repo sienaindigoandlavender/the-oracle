@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { PageWrapper, PageHeader, CosmicDivider } from "@/components/ui";
 
 interface Topic {
@@ -130,6 +131,40 @@ export default function LearnPage() {
         These are starting points, not doctrines. Take what resonates.
         Question everything — including what you read here.
       </p>
+
+      {/* Deep Dive Modules */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+        <Link href="/learn/tarot" className="oracle-card p-5 block transition-transform active:scale-[0.98]" style={{ background: "linear-gradient(145deg, rgba(212,165,74,0.08), rgba(12,18,37,0.6))" }}>
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">✦</span>
+            <div>
+              <div className="text-sm tracking-wide mb-1" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-accent)" }}>
+                Learn to Read Tarot
+              </div>
+              <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Complete guide to all 22 Major Arcana — symbolism, meanings, reversals, and reflection questions.
+              </p>
+              <span className="text-[10px] tracking-[1px] uppercase mt-2 inline-block" style={{ color: "var(--text-muted)" }}>22 cards · Full course →</span>
+            </div>
+          </div>
+        </Link>
+        <Link href="/learn/astrology" className="oracle-card p-5 block transition-transform active:scale-[0.98]" style={{ background: "linear-gradient(145deg, rgba(42,74,122,0.12), rgba(12,18,37,0.6))" }}>
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">☿</span>
+            <div>
+              <div className="text-sm tracking-wide mb-1" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-accent)" }}>
+                Learn to Read Birth Charts
+              </div>
+              <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Signs, planets, houses, elements, aspects — how to decode the cosmic map of who you are.
+              </p>
+              <span className="text-[10px] tracking-[1px] uppercase mt-2 inline-block" style={{ color: "var(--text-muted)" }}>6 modules · Full course →</span>
+            </div>
+          </div>
+        </Link>
+      </div>
+
+      <CosmicDivider />
 
       <div className="space-y-3">
         {TOPICS.map((topic) => {
