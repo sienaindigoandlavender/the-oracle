@@ -9,7 +9,7 @@ const TOOLS = [
   { href: "/tarot", icon: "✦", title: "Tarot", desc: "Draw wisdom from the Major Arcana", color: "rgba(212,165,74,0.12)" },
   { href: "/numerology", icon: "◈", title: "Numerology", desc: "The sacred mathematics of your soul", color: "rgba(74,138,122,0.15)" },
   { href: "/birthchart", icon: "☿", title: "Birth Chart", desc: "The stars at the moment of your becoming", color: "rgba(42,74,122,0.2)" },
-  { href: "/ouija", icon: "◎", title: "Ouija", desc: "Yes, no, or something the mind won't say", color: "rgba(74,53,112,0.2)" },
+  { href: "/ouija", icon: "◎", title: "Spirit Board", desc: "Ask anything. The spirits will spell their answer.", color: "rgba(74,53,112,0.2)" },
   { href: "/learn", icon: "❋", title: "Learn", desc: "Esoteric traditions, symbols & practices", color: "rgba(196,181,154,0.08)" },
 ];
 
