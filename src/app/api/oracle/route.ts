@@ -5,6 +5,9 @@ import {
   interpretNumerology,
   getJournalInsight,
   getOuijaAnswer,
+  interpretRunes,
+  interpretIChing,
+  interpretDream,
 } from "@/lib/oracle-service";
 
 export async function POST(req: NextRequest) {
@@ -29,6 +32,15 @@ export async function POST(req: NextRequest) {
         break;
       case "ouija":
         result = await getOuijaAnswer(body.question);
+        break;
+      case "runes":
+        result = await interpretRunes(body.runes, body.question, body.spreadType);
+        break;
+      case "iching":
+        result = await interpretIChing(body.hexagram, body.question, body.changingLines);
+        break;
+      case "dream":
+        result = await interpretDream(body.content, body.mood, body.symbols, body.title);
         break;
       default:
         return NextResponse.json({ error: "Unknown type" }, { status: 400 });

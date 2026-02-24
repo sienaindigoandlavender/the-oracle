@@ -5,11 +5,16 @@ import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { href: "/", label: "Home", icon: "☾" },
+  { href: "/daily", label: "Daily", icon: "⊛" },
   { href: "/tarot", label: "Tarot", icon: "✦" },
+  { href: "/runes", label: "Runes", icon: "ᚠ" },
+  { href: "/iching", label: "I Ching", icon: "☰" },
+  { href: "/ouija", label: "Spirits", icon: "◎" },
   { href: "/numerology", label: "Numbers", icon: "◈" },
   { href: "/birthchart", label: "Stars", icon: "☿" },
-  { href: "/ouija", label: "Ouija", icon: "◎" },
-  { href: "/journal", label: "Journal", icon: "◑" },
+  { href: "/journal", label: "Shadow", icon: "◑" },
+  { href: "/dreams", label: "Dreams", icon: "☾" },
+  { href: "/breathwork", label: "Breath", icon: "◯" },
   { href: "/learn", label: "Learn", icon: "❋" },
 ];
 
@@ -28,7 +33,7 @@ export default function Navigation() {
           backdropFilter: "blur(16px)",
         }}
       >
-        <div className="flex justify-around items-center px-1 py-1.5">
+        <div className="flex items-center px-1 py-1.5 overflow-x-auto no-scrollbar gap-0.5">
           {NAV_ITEMS.map(item => {
             const isActive = pathname === item.href;
             return (

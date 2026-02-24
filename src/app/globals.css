@@ -233,6 +233,10 @@ textarea::placeholder { color: var(--text-muted); opacity: 0.7; }
   filter: drop-shadow(0 0 12px rgba(196,181,154,0.3));
 }
 
+/* Hide scrollbar but keep scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
 /* ─── AI READING PROSE ───────────────────────────── */
 
 .oracle-prose {

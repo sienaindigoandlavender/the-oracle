@@ -217,3 +217,111 @@ Respond ONLY with the JSON object. No other text. No markdown wrapping. No backt
     return { message: "THE VEIL IS THICK TONIGHT ASK AGAIN" };
   }
 }
+
+// ─── RUNES ─────────────────────────────────────────────────
+export async function interpretRunes(
+  runes: { name: string; symbol: string; isReversed: boolean; position: string }[],
+  question: string,
+  spreadType: string
+): Promise<string> {
+  const runeDetails = runes
+    .map(r => `${r.position}: ${r.symbol} ${r.name} (${r.isReversed ? "Merkstave/Reversed" : "Upright"})`)
+    .join("\n");
+
+  const system = `You are a mystical oracle and master of the Elder Futhark runes.
+Your voice is ancient, earthy, and deeply primal — like stones speaking through centuries of moss and firelight.
+You use metaphors of carved stones, ancient forests, the roots of Yggdrasil, the whispers of northern winds, and the firelight of the longhouse.
+You weave the runes into a living tapestry — not definitions, but a message carved by fate itself.
+Use Markdown for formatting. Address the querent as "you."`;
+
+  const userMsg = `The querent reaches into the bag of stones and asks: "${question || "What do the ancient stones whisper?"}"
+
+The rune casting reveals:
+${runeDetails}
+
+Provide an enchanted, cohesive rune reading that feels like a message carried on the northern wind.
+
+Weave all the runes together into one narrative — a story about the querent's situation told by the old gods.
+For each rune, go deep — speak to the primal energy it carries, not just the textbook meaning.
+Connect the runes to each other. How do they form a pattern? What story do the stones tell together?
+End with a directive — what the runes demand of the querent. The old gods do not suggest. They command.
+
+Make it feel ancient. Make it feel inevitable.`;
+
+  return callClaude(system, userMsg);
+}
+
+// ─── I CHING ───────────────────────────────────────────────
+export async function interpretIChing(
+  hexagram: { number: number; name: string; chinese: string; trigrams: [string, string]; judgment: string },
+  question: string,
+  changingLines: string[]
+): Promise<string> {
+  const system = `You are a mystical oracle and sage of the I Ching — the Book of Changes.
+Your voice is ancient Chinese wisdom — measured, paradoxical, deeply patient. Like a river that has been flowing for 3,000 years.
+You use metaphors of water and mountain, heaven and earth, the turning of seasons, the dragon ascending and descending.
+You speak in the tradition of Confucius and Lao Tzu — with clarity that sounds simple but contains depths.
+Use Markdown for formatting. Address the querent as "you."`;
+
+  const userMsg = `The coins fall. The hexagram forms. The querent asks: "${question || "What is the nature of my current situation?"}"
+
+Hexagram ${hexagram.number}: **${hexagram.name}** (${hexagram.chinese})
+Upper trigram: ${hexagram.trigrams[1]} · Lower trigram: ${hexagram.trigrams[0]}
+Traditional judgment: "${hexagram.judgment}"
+${changingLines.length > 0 ? `\nChanging lines: ${changingLines.join(", ")}` : ""}
+
+Provide a profound I Ching reading that:
+
+1. Opens with the **essential meaning** of this hexagram — what is the cosmos saying about the querent's situation? Use the traditional judgment as a seed, but let it bloom into something personal and immediate.
+
+2. Explores the **trigram relationship** — how the upper and lower trigrams interact. What is the dynamic between these two forces? What tension or harmony do they create?
+
+${changingLines.length > 0 ? `3. Interprets the **changing lines** — these are the points of active transformation. Where is the situation in flux? What is shifting?` : "3. Since there are no changing lines, the situation is stable. Explore what it means that the hexagram is settled and not transforming."}
+
+4. Ends with **practical wisdom** — what should the querent DO with this knowledge? The I Ching is not abstract philosophy. It is a guide for action (or inaction).
+
+Make it feel like wisdom that has survived 3,000 years because it is still true.`;
+
+  return callClaude(system, userMsg);
+}
+
+// ─── DREAM INTERPRETATION ──────────────────────────────────
+export async function interpretDream(
+  content: string,
+  mood: string,
+  symbols: string,
+  title: string
+): Promise<string> {
+  const system = `You are a mystical oracle and dream interpreter in the tradition of Jung, Hillman, and the ancient temple dreamers.
+Your voice is intimate, nocturnal, and deeply knowing — like someone who lives in the borderland between waking and sleeping.
+You use metaphors of descent, water, mirrors, doorways, the house of the psyche, and the figures who visit us in the dark.
+You treat every dream element as a living symbol — not a code to crack, but a messenger to dialogue with.
+You never reduce a dream to a single meaning. You offer layers.
+Use Markdown for formatting. Address the dreamer as "you."`;
+
+  const userMsg = `A soul has brought a dream from the other side of sleep.
+
+${title ? `**Dream title:** "${title}"` : ""}
+${mood ? `**Dream mood:** ${mood}` : ""}
+
+**The dream:**
+"${content}"
+
+${symbols ? `**Key symbols the dreamer noticed:** ${symbols}` : ""}
+
+Provide a deep, layered dream interpretation that:
+
+1. **Enters the dream** — describe what you see in it, as if you are walking through it alongside the dreamer. Acknowledge the atmosphere, the emotion, the texture.
+
+2. **Reads the symbols** — take the key images (people, places, objects, actions) and explore what they might represent. Offer Jungian and archetypal perspectives. Don't flatten the symbols into dictionary definitions — let them breathe.
+
+3. **Names the message** — what is the unconscious trying to communicate? What part of the dreamer's psyche is speaking, and what does it want them to know?
+
+4. **Connects to waking life** — gently suggest where this dream might be pointing in their actual life. What situation, relationship, or inner process does it mirror?
+
+5. **Leaves a question** — one question that invites the dreamer to continue the conversation with their unconscious.
+
+Make it feel like the dream is still alive — still speaking — even now.`;
+
+  return callClaude(system, userMsg);
+}

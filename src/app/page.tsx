@@ -5,12 +5,17 @@ import { motion } from "framer-motion";
 import { CosmicDivider } from "@/components/ui";
 
 const TOOLS = [
-  { href: "/journal", icon: "◑", title: "Shadow Journal", desc: "Meet the parts of you waiting in the dark", color: "rgba(123,74,110,0.2)" },
+  { href: "/daily", icon: "⊛", title: "Daily Oracle", desc: "Your daily card, moon phase & reflection", color: "rgba(212,165,74,0.15)" },
   { href: "/tarot", icon: "✦", title: "Tarot", desc: "Draw wisdom from the Major Arcana", color: "rgba(212,165,74,0.12)" },
+  { href: "/runes", icon: "ᚠ", title: "Runes", desc: "Elder Futhark — the old stones speak", color: "rgba(74,138,122,0.18)" },
+  { href: "/iching", icon: "☰", title: "I Ching", desc: "3,000 years of wisdom in six lines", color: "rgba(196,181,154,0.12)" },
+  { href: "/ouija", icon: "◎", title: "Spirit Board", desc: "Ask anything. The spirits answer.", color: "rgba(74,53,112,0.2)" },
   { href: "/numerology", icon: "◈", title: "Numerology", desc: "The sacred mathematics of your soul", color: "rgba(74,138,122,0.15)" },
-  { href: "/birthchart", icon: "☿", title: "Birth Chart", desc: "The stars at the moment of your becoming", color: "rgba(42,74,122,0.2)" },
-  { href: "/ouija", icon: "◎", title: "Spirit Board", desc: "Ask anything. The spirits will spell their answer.", color: "rgba(74,53,112,0.2)" },
-  { href: "/learn", icon: "❋", title: "Learn", desc: "Esoteric traditions, symbols & practices", color: "rgba(196,181,154,0.08)" },
+  { href: "/birthchart", icon: "☿", title: "Birth Chart", desc: "The cosmos when you arrived", color: "rgba(42,74,122,0.2)" },
+  { href: "/journal", icon: "◑", title: "Shadow Journal", desc: "Meet the parts waiting in the dark", color: "rgba(123,74,110,0.2)" },
+  { href: "/dreams", icon: "☾", title: "Dream Journal", desc: "The unconscious speaks while you sleep", color: "rgba(42,74,122,0.15)" },
+  { href: "/breathwork", icon: "◯", title: "Breathwork", desc: "Come back to the body", color: "rgba(74,138,122,0.1)" },
+  { href: "/learn", icon: "❋", title: "Learn", desc: "Esoteric traditions & practices", color: "rgba(196,181,154,0.08)" },
 ];
 
 export default function HomePage() {
