@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { PageWrapper, PageHeader, CosmicDivider } from "@/components/ui";
+import { OracleReading } from "@/components/OracleReading";
+import { useOracle } from "@/lib/useOracle";
 import { ZODIAC_SIGNS, PLANETS, HOUSES, type ZodiacSign } from "@/lib/astrology-data";
 
 interface PlanetPlacement { planet: string; sign: ZodiacSign; house: string; degree: number; }
@@ -11,11 +13,14 @@ interface ChartData { sun: ZodiacSign; moon: ZodiacSign; rising: ZodiacSign | nu
 export default function BirthChartPage() {
   const [birthdate, setBirthdate] = useState("");
   const [birthtime, setBirthtime] = useState("");
+  const [birthname, setBirthname] = useState("");
   const [chart, setChart] = useState<ChartData | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const oracle = useOracle();
 
   const generateChart = () => {
     if (!birthdate) return;
+    oracle.reset();
     const seed = birthdate.split("-").reduce((a, b) => a + parseInt(b), 0) + (birthtime ? birthtime.split(":").reduce((a, b) => a + parseInt(b), 0) : 42);
     const rng = (i: number) => ((seed * 9301 + 49297 + i * 7919) % 233280) / 233280;
     setChart({
@@ -96,6 +101,8 @@ export default function BirthChartPage() {
       <CosmicDivider />
 
       <div className="max-w-sm mx-auto mb-8">
+        <label className="label-text">Your Name</label>
+        <input type="text" value={birthname} onChange={e => setBirthname(e.target.value)} placeholder="Your name" className="oracle-input mb-4" />
         <label className="label-text">Date of Birth</label>
         <input type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} className="oracle-input mb-4" />
         <label className="label-text">Time of Birth <span style={{ opacity: 0.5 }}>(optional)</span></label>
@@ -148,6 +155,25 @@ export default function BirthChartPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* AI Deep Reading */}
+          <CosmicDivider />
+          <div className="max-w-xl mx-auto">
+            {!oracle.result && !oracle.loading && (
+              <div className="text-center">
+                <button
+                  onClick={() => oracle.ask({
+                    type: "birthchart",
+                    data: { name: birthname, date: birthdate, time: birthtime },
+                  })}
+                  className="oracle-btn"
+                >
+                  Receive Deep Reading
+                </button>
+              </div>
+            )}
+            <OracleReading content={oracle.result} loading={oracle.loading} error={oracle.error} />
           </div>
         </motion.div>
       )}

@@ -16,14 +16,35 @@ export default function OuijaPage() {
   const [sessionLog, setSessionLog] = useState<SessionEntry[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const channel = () => {
+  const channel = async () => {
     if (!question.trim() || isChanneling) return;
     setIsChanneling(true);
     setCurrentAnswer(null);
     setCurrentWhisper("");
     inputRef.current?.blur();
 
-    const response = getOuijaResponse();
+    // Try AI first, fall back to static
+    let response: { answer: OuijaAnswer; whisper: string };
+    try {
+      const res = await fetch("/api/oracle", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "ouija", question }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const r = typeof data.result === "string" ? JSON.parse(data.result) : data.result;
+        if (r && r.answer && r.whisper) {
+          response = r;
+        } else {
+          response = getOuijaResponse();
+        }
+      } else {
+        response = getOuijaResponse();
+      }
+    } catch {
+      response = getOuijaResponse();
+    }
 
     // Dramatic planchette wandering before answer
     const sequence = ["yes", "no", "uncertain", "yes", "no"] as const;

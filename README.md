@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inner Oracle
 
-## Getting Started
+**Go within. Transform. Become.**
 
-First, run the development server:
+A cosmic-themed personal transformation app with AI-powered readings — Tarot, Numerology, Birth Chart, Ouija, Shadow Journal, and esoteric learning.
+
+## Setup
+
+```bash
+npm install
+```
+
+### AI-Powered Readings (Optional)
+
+The app works without an API key — all oracle tools use built-in static readings as a fallback. To enable **AI-powered readings** (deeply personalized, narrative interpretations):
+
+1. Get an API key from [console.anthropic.com](https://console.anthropic.com)
+2. Copy the example env file:
+   ```bash
+   cp .env.example .env.local
+   ```
+3. Add your key to `.env.local`:
+   ```
+   ANTHROPIC_API_KEY=sk-ant-your-key-here
+   ```
+
+### Run
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Mobile Access
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Find your local IP and visit `http://YOUR_IP:3000` from your phone. Add to home screen for a full-screen app experience.
 
-## Learn More
+## What's Inside
 
-To learn more about Next.js, take a look at the following resources:
+| Tool | Description |
+|------|-------------|
+| **Tarot** | 4 spreads (Single, 3-Card, 5-Card, Celtic Cross) with AI narrative readings |
+| **Numerology** | Life Path, Expression, Soul Urge, Personality numbers with AI interpretation |
+| **Birth Chart** | Zodiac wheel, Big Three, planetary placements with AI deep reading |
+| **Ouija** | Yes/No/Uncertain spirit board with AI-generated intuitive whispers |
+| **Shadow Journal** | 35+ shadow work prompts with AI insight on your entries |
+| **Learn: Tarot** | Complete 22-card Major Arcana course with symbolism and reflection questions |
+| **Learn: Birth Charts** | Signs, planets, houses, elements, aspects — full astrology course |
+| **Learn: Hub** | Shadow work, inner alchemy, and esoteric traditions |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js · TypeScript · Tailwind CSS · Framer Motion · Claude API (Sonnet)

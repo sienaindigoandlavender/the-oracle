@@ -232,3 +232,55 @@ textarea::placeholder { color: var(--text-muted); opacity: 0.7; }
 .moon-icon {
   filter: drop-shadow(0 0 12px rgba(196,181,154,0.3));
 }
+
+/* ─── AI READING PROSE ───────────────────────────── */
+
+.oracle-prose {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+.oracle-prose h1, .oracle-prose h2, .oracle-prose h3 {
+  font-family: 'Philosopher', serif;
+  color: var(--text-accent);
+  letter-spacing: 1px;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.oracle-prose h1 { font-size: 1.3em; }
+.oracle-prose h2 { font-size: 1.15em; }
+.oracle-prose h3 { font-size: 1.05em; color: var(--text-primary); }
+.oracle-prose p { margin-bottom: 1em; }
+.oracle-prose strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.oracle-prose em {
+  color: var(--text-primary);
+  opacity: 0.85;
+}
+.oracle-prose ul, .oracle-prose ol {
+  padding-left: 1.2em;
+  margin-bottom: 1em;
+}
+.oracle-prose li {
+  margin-bottom: 0.3em;
+}
+.oracle-prose li::marker {
+  color: var(--text-accent);
+}
+.oracle-prose blockquote {
+  border-left: 2px solid var(--text-accent);
+  padding-left: 1em;
+  margin: 1em 0;
+  font-style: italic;
+  color: var(--text-primary);
+  opacity: 0.8;
+}
+.oracle-prose hr {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 1.5em 0;
+}

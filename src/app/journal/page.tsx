@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageWrapper, PageHeader, CosmicDivider, InfoCard } from "@/components/ui";
+import { OracleReading } from "@/components/OracleReading";
+import { useOracle } from "@/lib/useOracle";
 import { getRandomPrompt, THEMES, type JournalPrompt } from "@/lib/journal-prompts";
 
 interface JournalEntry {
@@ -11,6 +13,7 @@ interface JournalEntry {
   theme: string;
   text: string;
   date: string;
+  insight?: string;
 }
 
 export default function JournalPage() {
@@ -20,6 +23,7 @@ export default function JournalPage() {
   const [selectedTheme, setSelectedTheme] = useState<string | undefined>();
   const [showArchive, setShowArchive] = useState(false);
   const [saved, setSaved] = useState(false);
+  const oracle = useOracle();
 
   // Load entries from localStorage
   useEffect(() => {
@@ -38,10 +42,13 @@ export default function JournalPage() {
     setCurrentPrompt(getRandomPrompt(selectedTheme));
     setEntry("");
     setSaved(false);
+    oracle.reset();
   };
 
-  const saveEntry = () => {
+  const saveEntry = async () => {
     if (!currentPrompt || !entry.trim()) return;
+
+    // Save immediately
     const newEntry: JournalEntry = {
       id: Date.now().toString(),
       prompt: currentPrompt.text,
@@ -51,6 +58,19 @@ export default function JournalPage() {
     };
     saveEntries([newEntry, ...entries]);
     setSaved(true);
+
+    // Request AI insight
+    const insight = await oracle.ask({
+      type: "journal",
+      entry: entry.trim(),
+      prompt: currentPrompt.text,
+    });
+
+    // Update the saved entry with the insight
+    if (insight) {
+      const updated = [{ ...newEntry, insight }, ...entries.slice(0)];
+      saveEntries(updated);
+    }
   };
 
   const deleteEntry = (id: string) => {
@@ -169,12 +189,16 @@ export default function JournalPage() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-center py-6"
+                className="py-4"
               >
-                <div className="text-2xl mb-2">☽</div>
-                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                  Saved. You showed up for yourself today.
-                </p>
+                <div className="text-center mb-4">
+                  <div className="text-2xl mb-2">☽</div>
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                    Saved. You showed up for yourself today.
+                  </p>
+                </div>
+                {/* AI Insight */}
+                <OracleReading content={oracle.result} loading={oracle.loading} error={oracle.error} />
               </motion.div>
             )}
           </motion.div>

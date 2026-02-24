@@ -35,4 +35,16 @@ export const SPREAD_LABELS: Record<string, string[]> = {
   single: ["The Answer"],
   three: ["Past", "Present", "Future"],
   five: ["Situation", "Challenge", "Foundation", "Recent Past", "Potential"],
+  celtic: [
+    "Present",
+    "Challenge",
+    "Foundation",
+    "Recent Past",
+    "Higher Purpose",
+    "Near Future",
+    "Your Attitude",
+    "External Influences",
+    "Hopes & Fears",
+    "Outcome",
+  ],
 };

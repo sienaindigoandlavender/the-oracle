@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { PageWrapper, PageHeader, CosmicDivider } from "@/components/ui";
+import { OracleReading } from "@/components/OracleReading";
+import { useOracle } from "@/lib/useOracle";
 import { calcLifePath, calcExpression, calcSoulUrge, calcPersonality, numberMeanings } from "@/lib/numerology";
 
 interface Results { lifePath: number; expression: number; soulUrge: number; personality: number; }
@@ -11,15 +13,9 @@ function NumberCard({ label, number, delay = 0 }: { label: string; number: numbe
   const info = numberMeanings[number] || { title: "Mystery", desc: "The cosmos holds secrets yet unrevealed." };
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }} className="glass p-5">
-      <div className="text-[10px] tracking-[2px] uppercase mb-2" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-muted)" }}>
-        {label}
-      </div>
-      <div className="text-4xl mb-1" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-accent)", textShadow: "0 0 20px rgba(212,165,74,0.2)" }}>
-        {number}
-      </div>
-      <div className="text-sm tracking-wide mb-2" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-primary)" }}>
-        {info.title}
-      </div>
+      <div className="text-[10px] tracking-[2px] uppercase mb-2" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-muted)" }}>{label}</div>
+      <div className="text-4xl mb-1" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-accent)", textShadow: "0 0 20px rgba(212,165,74,0.2)" }}>{number}</div>
+      <div className="text-sm tracking-wide mb-2" style={{ fontFamily: "'Philosopher', serif", color: "var(--text-primary)" }}>{info.title}</div>
       <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{info.desc}</p>
     </motion.div>
   );
@@ -29,16 +25,32 @@ export default function NumerologyPage() {
   const [name, setName] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [results, setResults] = useState<Results | null>(null);
+  const oracle = useOracle();
 
   const calculate = () => {
     if (!name || !birthdate) return;
-    setResults({
+    oracle.reset();
+    const r = {
       lifePath: calcLifePath(birthdate),
       expression: calcExpression(name),
       soulUrge: calcSoulUrge(name),
       personality: calcPersonality(name),
-    });
+    };
+    setResults(r);
   };
+
+  // Auto-request AI reading when results are available
+  useEffect(() => {
+    if (results && !oracle.result && !oracle.loading) {
+      oracle.ask({
+        type: "numerology",
+        name,
+        birthDate: birthdate,
+        results,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results]);
 
   return (
     <PageWrapper>
@@ -54,12 +66,19 @@ export default function NumerologyPage() {
       </div>
 
       {results && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <NumberCard label="Life Path" number={results.lifePath} delay={0} />
-          <NumberCard label="Expression" number={results.expression} delay={0.1} />
-          <NumberCard label="Soul Urge" number={results.soulUrge} delay={0.2} />
-          <NumberCard label="Personality" number={results.personality} delay={0.3} />
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+            <NumberCard label="Life Path" number={results.lifePath} delay={0} />
+            <NumberCard label="Expression" number={results.expression} delay={0.1} />
+            <NumberCard label="Soul Urge" number={results.soulUrge} delay={0.2} />
+            <NumberCard label="Personality" number={results.personality} delay={0.3} />
+          </div>
+
+          {/* AI deep reading */}
+          <div className="max-w-xl mx-auto">
+            <OracleReading content={oracle.result} loading={oracle.loading} error={oracle.error} />
+          </div>
+        </>
       )}
     </PageWrapper>
   );
